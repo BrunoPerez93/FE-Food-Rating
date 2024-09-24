@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import appSettings from '../../settings/AppSetting';
+import TableFood from './TableFood';
+import Button from '../Button';
 
 const FoodList = () => {
   const [food, setFood] = useState([]);
@@ -24,33 +26,22 @@ const FoodList = () => {
     navigate('/AddNewFood');
   };
 
+  const handleDelete = (id) => {
+    setFood((prevFood) => prevFood.filter((item) => item.id !== id));
+  };
+
   return (
     <div className="p-3 justify-content-center">
       <div className="row my-3">
         <h4 className="text-center">Best Food Ratings</h4>
       </div>
-      <table className="table table-bordered">
-        <thead>
-          <tr>
-            <th>Food Name</th>
-            <th>Vendor Name</th>
-            <th>Rating</th>
-          </tr>
-        </thead>
-        <tbody>
-          {food.map((item) => (
-            <tr key={item.id}>
-              <td>{item.name}</td>
-              <td>{item.vendorName}</td>
-              <td>{item.foodRating}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <TableFood food={food} onDelete={handleDelete} />
       <div className="w-100 text-center">
-        <button className="btn btn-primary w-25" onClick={handleButton}>
-          Add New Food
-        </button>
+        <Button
+          className="btn-primary w-25"
+          onClick={handleButton}
+          text="Add New Food"
+        />
       </div>
     </div>
   );
